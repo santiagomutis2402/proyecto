@@ -102,6 +102,8 @@ $actividad = $actividades['actividad'];
                         placeholder="Voy a ir a jugar futbol con alguno de mis amigos en versalles"><?php echo $descripcion ?></textarea>
                 </div>
 
+                <input type="hidden" name="id" id="id" value="<?php echo $ID ?>">
+
                 <div class="d-grid gap-2">
                     <button class="btn btn-primary" type="submit">Crear</button>
                 </div>

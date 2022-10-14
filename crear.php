@@ -26,4 +26,5 @@ if ($id == null) {
     );
     header("Location: index.php");
 } else {
+    //por si alguien esta aqui solo falta realizar el editar
 }

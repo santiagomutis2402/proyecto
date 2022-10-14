@@ -59,14 +59,14 @@
                     <input class="form-control" type="text" id="actividades" name="actividades"
                         placeholder="ingrese una actividad" list="actividades_list" />
                     <?php
-          require_once("class/agenda.php");
-          $obj_actividad = new agenda();
-          $actividades = $obj_actividad->select_actividades();
+                    require_once("class/agenda.php");
+                    $obj_actividad = new agenda();
+                    $actividades = $obj_actividad->select_actividades();
 
-          $nactividades = count($actividades);
+                    $nactividades = count($actividades);
 
-          //inicio del select de actividades
-          if ($nactividades > 0) : ?>
+                    //inicio del select de actividades
+                    if ($nactividades > 0) : ?>
                     <datalist id="actividades_list">
                         <?php foreach ($actividades as $resultado) : ?>
                         <option value=<?php print $resultado['actividad'] ?>></option>
@@ -83,6 +83,8 @@
                         id="descripcion"
                         placeholder="Voy a ir a jugar futbol con alguno de mis amigos en versalles"></textarea>
                 </div>
+
+
 
                 <div class="d-grid gap-2">
                     <button class="btn btn-primary" type="submit">Crear</button>

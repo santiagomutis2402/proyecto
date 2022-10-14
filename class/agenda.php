@@ -72,4 +72,19 @@ class agenda extends modeloCredencialesBD
             $this->_db->close();
         }
     }
+
+    public function update($ID)
+    {
+        $instruccion = "CALL agenda.select_byid($ID)";
+        $consulta = $this->_db->query($instruccion);
+        $resultado = $consulta->fetch_assoc();
+
+        if (!$resultado) {
+            echo "Fallo al actualizar las actividades";
+        } else {
+            return $resultado;
+
+            $this->_db->close();
+        }
+    }
 }
