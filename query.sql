@@ -26,7 +26,7 @@ CREATE TABLE `actividades` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `actividad` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -35,7 +35,7 @@ CREATE TABLE `actividades` (
 
 LOCK TABLES `actividades` WRITE;
 /*!40000 ALTER TABLE `actividades` DISABLE KEYS */;
-INSERT INTO `actividades` VALUES (1,'futbol'),(2,'nadar');
+INSERT INTO `actividades` VALUES (1,'futbol'),(2,'nadar'),(3,'clases de canto');
 /*!40000 ALTER TABLE `actividades` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -68,7 +68,7 @@ CREATE TABLE `dias` (
 
 LOCK TABLES `dias` WRITE;
 /*!40000 ALTER TABLE `dias` DISABLE KEYS */;
-INSERT INTO `dias` VALUES (1,'hola','2020-01-01','10:10:10','10:10:10',1,1,'saludos',NULL),(2,'Casa en la play...','2022-10-06','01:14:00','02:14:00',1,1,'fafadsfdafd','san francisco'),(3,'Casa en la play...','2022-10-06','01:14:00','02:14:00',1,1,'fafadsfdafd','san francisco'),(4,'Prueba1','2022-10-11','02:21:00','02:21:00',1,2,'adad','san francisco');
+INSERT INTO `dias` VALUES (1,'hola','2020-01-01','10:10:10','10:10:10',1,1,'saludos',NULL),(2,'Casa en la play...','2022-10-06','01:14:00','02:14:00',1,1,'fafadsfdafd','san francisco'),(3,'Casa en la play...','2022-10-06','01:14:00','02:14:00',1,1,'fafadsfdafd','san francisco'),(4,'Prueba :O','2022-10-11','02:21:00','02:21:00',1,3,'adad','san francisco');
 /*!40000 ALTER TABLE `dias` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -88,6 +88,76 @@ DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `select_actividades`()
 BEGIN
 select*FROM actividades; 
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `select_byid` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `select_byid`(in ID integer)
+BEGIN
+SELECT * FROM agenda.dias dias inner join agenda.actividades act on dias.id_actividad=act.id where dias.id=ID;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `UpdateAgenda` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `UpdateAgenda`(in titul varchar(100), 
+in fech date, in hdesde time, in hhasta time, in est integer, in descri varchar(700), in actividades varchar(700), in ubi varchar(700), in ID2 integer)
+BEGIN
+ SET @v1=(SELECT count(actividad) FROM `actividades` WHERE `actividad`=actividades);
+    
+    if @v1=0 THEN
+    insert into actividades(actividad) values (actividades);
+    set @v2:=(select id from actividades where actividad=actividades);
+UPDATE dias
+SET 
+    titulo = titul,
+    fecha = fech,
+hora_inicio = hdesde,
+    hora_final = hhasta,
+    estado = est,
+    id_actividad = @v2,
+    descripcion = descri,
+    ubicacion = ubi
+WHERE
+    id = ID2;
+    ELSE
+        set @v2:=(select id from actividades where actividad=actividades);
+UPDATE dias
+SET 
+    titulo = titul,
+    fecha = fech,
+    hora_inicio = hdesde,
+    hora_final = hhasta,
+    estado = est,
+    id_actividad = @v2,
+    descripcion = descri,
+    ubicacion = ubi
+WHERE
+    id = ID2;
+end if;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -143,4 +213,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-10-13 22:40:05
+-- Dump completed on 2022-10-15  1:31:49

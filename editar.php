@@ -105,7 +105,7 @@ $actividad = $actividades['actividad'];
                 <input type="hidden" name="id" id="id" value="<?php echo $ID ?>">
 
                 <div class="d-grid gap-2">
-                    <button class="btn btn-primary" type="submit">Crear</button>
+                    <button class="btn btn-primary" type="submit">Editar</button>
                 </div>
             </div>
         </form>

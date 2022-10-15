@@ -38,4 +38,5 @@ if ($id == null) {
         $ubicacion,
         $id
     );
+    header("Location: index.php");
 }

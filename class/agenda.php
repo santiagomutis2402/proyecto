@@ -74,7 +74,7 @@ class agenda extends modeloCredencialesBD
     }
 
     public function update(
-        $ID,
+
         $titulo,
         $fecha,
         $hDesde,
@@ -82,22 +82,20 @@ class agenda extends modeloCredencialesBD
         $estado,
         $descripcion,
         $actividades,
-        $ubicacion
+        $ubicacion,
+        $ID
     ) {
-        $instruccion = "call agenda.UpdateAgenda('" . $titulo . "','" . $fecha .
+        $instruccion = "call UpdateAgenda('" . $titulo . "','" . $fecha .
             "','" . $hDesde . "','" . $hHasta . "','" . $estado . "','" .
             $descripcion . "','" . $actividades . "','" . $ubicacion . "','" . $ID . "')";
-
         $consulta = $this->_db->query($instruccion);
-        $consulta = $this->_db->query($instruccion);
-        $resultado = $consulta->fetch_assoc();
+        // $resultado = $consulta->fetch_assoc();
+        // if (!$resultado) {
+        //     echo "Fallo al actualizar las actividades";
+        // } else {
+        //     return $resultado;
 
-        if (!$resultado) {
-            echo "Fallo al actualizar las actividades";
-        } else {
-            return $resultado;
-
-            $this->_db->close();
-        }
+        //     $this->_db->close();
+        // }
     }
 }
