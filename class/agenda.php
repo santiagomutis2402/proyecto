@@ -57,4 +57,45 @@ class agenda extends modeloCredencialesBD
             $this->_db->close();
         }
     }
+
+    public function select_byid($ID)
+    {
+        $instruccion = "CALL agenda.select_byid($ID)";
+        $consulta = $this->_db->query($instruccion);
+        $resultado = $consulta->fetch_assoc();
+
+        if (!$resultado) {
+            echo "Fallo al consultar las actividades";
+        } else {
+            return $resultado;
+
+            $this->_db->close();
+        }
+    }
+
+    public function update(
+
+        $titulo,
+        $fecha,
+        $hDesde,
+        $hHasta,
+        $estado,
+        $descripcion,
+        $actividades,
+        $ubicacion,
+        $ID
+    ) {
+        $instruccion = "call UpdateAgenda('" . $titulo . "','" . $fecha .
+            "','" . $hDesde . "','" . $hHasta . "','" . $estado . "','" .
+            $descripcion . "','" . $actividades . "','" . $ubicacion . "','" . $ID . "')";
+        $consulta = $this->_db->query($instruccion);
+        // $resultado = $consulta->fetch_assoc();
+        // if (!$resultado) {
+        //     echo "Fallo al actualizar las actividades";
+        // } else {
+        //     return $resultado;
+
+        //     $this->_db->close();
+        // }
+    }
 }

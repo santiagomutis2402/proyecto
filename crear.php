@@ -1,6 +1,7 @@
 <?php
 include('class/agenda.php');
 
+$id = $_POST['id'] ?? null;
 $titulo = $_POST['titulo'];
 $fecha = $_POST['fecha'];
 $hDesde = $_POST['hDesde'];
@@ -12,14 +13,30 @@ $ubicacion = $_POST['ubicacion'];
 
 $ins = new agenda();
 
-$ins->insert(
-    $titulo,
-    $fecha,
-    $hDesde,
-    $hHasta,
-    $estado,
-    $descripcion,
-    $actividades,
-    $ubicacion
-);
-header("Location: index.php");
+if ($id == null) {
+    $ins->insert(
+        $titulo,
+        $fecha,
+        $hDesde,
+        $hHasta,
+        $estado,
+        $descripcion,
+        $actividades,
+        $ubicacion
+    );
+    header("Location: index.php");
+} else {
+    //por si alguien esta aqui solo falta realizar el editar
+    $ins->update(
+        $titulo,
+        $fecha,
+        $hDesde,
+        $hHasta,
+        $estado,
+        $descripcion,
+        $actividades,
+        $ubicacion,
+        $id
+    );
+    header("Location: index.php");
+}
