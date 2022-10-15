@@ -73,9 +73,22 @@ class agenda extends modeloCredencialesBD
         }
     }
 
-    public function update($ID)
-    {
-        $instruccion = "CALL agenda.select_byid($ID)";
+    public function update(
+        $ID,
+        $titulo,
+        $fecha,
+        $hDesde,
+        $hHasta,
+        $estado,
+        $descripcion,
+        $actividades,
+        $ubicacion
+    ) {
+        $instruccion = "call agenda.UpdateAgenda('" . $titulo . "','" . $fecha .
+            "','" . $hDesde . "','" . $hHasta . "','" . $estado . "','" .
+            $descripcion . "','" . $actividades . "','" . $ubicacion . "','" . $ID . "')";
+
+        $consulta = $this->_db->query($instruccion);
         $consulta = $this->_db->query($instruccion);
         $resultado = $consulta->fetch_assoc();
 
