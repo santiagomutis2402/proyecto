@@ -29,10 +29,10 @@ class agenda extends modeloCredencialesBD
     ) {
         $instruccion = "call agenda.ValidarExistencia('" . $titulo . "','" . $fecha .
             "','" . $hDesde . "','" . $hHasta . "','" . $estado . "','" .
-            $descripcion . "','" . $actividades . "','" . $ubicacion . "',)";
+            $descripcion . "','" . $actividades . "','" . $ubicacion . "')";
 
         $consulta = $this->_db->query($instruccion);
-        // $resultado = $consulta->fetch_all(MYSQLI_ASSOC);
+        // $resultado = $consulta->fetch_all();
 
         // if (!$resultado) {
         //     echo "Fallo al insertar las actividades";
@@ -40,6 +40,8 @@ class agenda extends modeloCredencialesBD
         //     return $resultado;
         //     $this->_db->close();
         // }
+
+        return $instruccion;
     }
 
     public function select_actividades()
