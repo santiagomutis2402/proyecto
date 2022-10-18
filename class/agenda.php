@@ -44,6 +44,22 @@ class agenda extends modeloCredencialesBD
         return $instruccion;
     }
 
+    public function listar()
+    {
+
+        $instruccion = "CALL listar()";
+        $consulta = $this->_db->query($instruccion);
+        $resultado = $consulta->fetch_all(MYSQLI_ASSOC);
+
+        if (!$resultado) {
+            echo "Fallo al consultar las actividades";
+        } else {
+            return $resultado;
+            $resultado->close();
+            $this->_db->close();
+        }
+    }
+
     public function select_actividades()
     {
 
@@ -73,6 +89,21 @@ class agenda extends modeloCredencialesBD
 
             $this->_db->close();
         }
+    }
+
+    public function eliminar($ID)
+    {
+        $instruccion = "call agenda.eliminar($ID);";
+        $consulta = $this->_db->query($instruccion);
+        // $resultado = $consulta->fetch_all();
+
+        // if (!$resultado) {
+        //     echo "Fallo al eliminar";
+        // } else {
+        //     return $resultado;
+
+        //     $this->_db->close();
+        // }
     }
 
     public function update(

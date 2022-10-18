@@ -26,7 +26,7 @@ CREATE TABLE `actividades` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `actividad` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -35,7 +35,7 @@ CREATE TABLE `actividades` (
 
 LOCK TABLES `actividades` WRITE;
 /*!40000 ALTER TABLE `actividades` DISABLE KEYS */;
-INSERT INTO `actividades` VALUES (1,'futbol'),(2,'nadar'),(3,'clases de canto');
+INSERT INTO `actividades` VALUES (1,'futbol'),(2,'nadar'),(3,'clases de canto'),(4,'ruleta rusa'),(5,'ver concierto');
 /*!40000 ALTER TABLE `actividades` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -59,7 +59,7 @@ CREATE TABLE `dias` (
   PRIMARY KEY (`id`),
   KEY `actividadId_idx` (`id_actividad`),
   CONSTRAINT `actividadId` FOREIGN KEY (`id_actividad`) REFERENCES `actividades` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -68,13 +68,52 @@ CREATE TABLE `dias` (
 
 LOCK TABLES `dias` WRITE;
 /*!40000 ALTER TABLE `dias` DISABLE KEYS */;
-INSERT INTO `dias` VALUES (1,'hola','2020-01-01','10:10:10','10:10:10',1,1,'saludos',NULL),(2,'Casa en la play...','2022-10-06','01:14:00','02:14:00',1,1,'fafadsfdafd','san francisco'),(3,'Casa en la play...','2022-10-06','01:14:00','02:14:00',1,1,'fafadsfdafd','san francisco'),(4,'Prueba :O','2022-10-11','02:21:00','02:21:00',1,3,'adad','san francisco');
+INSERT INTO `dias` VALUES (1,'hola','2020-01-01','10:10:10','10:10:10',1,1,'saludos',NULL),(2,'Casa en la play...','2022-10-06','01:14:00','02:14:00',1,1,'fafadsfdafd','san francisco'),(3,'Solo para ver si agarrar id funciona','2022-10-06','01:14:00','02:14:00',1,1,'fafadsfdafd','san francisco'),(4,'rusos','2022-10-16','02:21:00','02:21:00',2,3,'adad','san francisco'),(5,'Casa en la play...','2022-10-11','01:03:00','01:03:00',1,1,'fvsgsd','san francisco'),(6,'Casa en la playa nuevo2','2022-10-25','01:10:00','02:10:00',1,2,'afaf','san francisco'),(7,'rusos','2022-10-26','05:10:00','08:10:00',1,4,'muerte ','san francisco'),(8,'badbunny el conejo malo','2022-10-16','02:52:00','02:52:00',1,5,'Llegar temprano al concierto porque si no, no me dejan pasar','amador');
 /*!40000 ALTER TABLE `dias` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
 -- Dumping routines for database 'agenda'
 --
+/*!50003 DROP PROCEDURE IF EXISTS `eliminar` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `eliminar`(in ID2 integer)
+BEGIN
+UPDATE dias SET estado = 2 WHERE id = ID2;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `listar` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `listar`()
+BEGIN
+set @v1=(select CURDATE());
+select d.id,d.titulo,d.fecha,d.hora_inicio,d.hora_final,d.estado,d.id_actividad,d.descripcion,d.ubicacion,ac.actividad from dias d inner join actividades ac on d.id_actividad=ac.id where d.fecha=@v1 and  d.estado=1;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `select_actividades` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -175,7 +214,7 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `ValidarExistencia`(in 
-titulo varchar(100), 
+titulo varchar(400), 
 fecha date, 
 hinicio time,
  hfinal time,
@@ -213,4 +252,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-10-15  1:31:49
+-- Dump completed on 2022-10-16 23:39:18

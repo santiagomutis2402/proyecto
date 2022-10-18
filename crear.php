@@ -24,7 +24,7 @@ if ($id == null) {
         $actividades,
         $ubicacion
     );
-    header("Location: listar.php");
+    header("Location: index.php");
 } else {
     $ins->update(
         $titulo,
@@ -37,5 +37,5 @@ if ($id == null) {
         $ubicacion,
         $id
     );
-    header("Location: listar.php");
+    header("Location: index.php");
 }

@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Listar</title>
 
     <!-- CSS only -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -14,84 +14,58 @@
 
 <body>
     <div class="container bg-light vh-100">
-        <form action="crear.php" method="POST">
-            <h1 class="text-center">Formulario</h1>
-            <div class="row">
-                <div class="col-12">
-                    <div class="row">
-                        <div class="col-12 col-md-8">
-                            <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label fs-3">Titulo</label>
-                                <input type="text" class="form-control" id="titulo" name="titulo"
-                                    aria-describedby="emailHelp" placeholder="Futbol" />
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-4">
-                            <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label fs-3">Fecha</label>
-                                <input type="date" class="form-control" id="fecha" name="fecha"
-                                    aria-describedby="emailHelp" />
-                            </div>
-                        </div>
+        <h1 class="text-center m-3">Agenda</h1>
+        <!--acordeon-->
+
+        <div class="accordion accordion-flush" id="accordionFlushExample">
+            <!--inicia el ford-->
+            <?php require_once("class/agenda.php");
+            $obj_actividad = new agenda();
+            $actividades = $obj_actividad->listar();
+            $index = 0;
+            $nactividades = count($actividades);
+
+            //inicio del select de actividades
+            if ($nactividades > 0) : ?>
+            <?php foreach ($actividades as $resultado) :
+                    $index++; ?>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingOne<?php echo $valor = $index ?>">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#flush-collapseOne<?php echo $valor = $index ?>" aria-expanded="false"
+                        aria-controls="flush-collapseOne<?php echo $valor = $index ?>">
+                        <?php echo $resultado['titulo'] . ' Fecha:     ' .  $resultado['fecha']   ?>
+                    </button>
+                </h2>
+                <div id="flush-collapseOne<?php echo $valor = $index ?>" class="accordion-collapse collapse"
+                    aria-labelledby="flush-headingOne<?php echo $valor = $index ?>"
+                    data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+                        <h4><strong>Actividad: </strong><?php echo  $resultado['actividad']  ?></h4>
+                        <h5><strong>Fecha: </strong><?php echo $resultado['fecha'] ?></h5>
+                        <h5><strong>Horario:
+                            </strong><?php echo $resultado['hora_inicio'] . " - " . $resultado['hora_final']  ?></h5>
+                        <h5><strong>Ubicacion: </strong><?php echo $resultado['ubicacion'] ?></h5>
+                        <hr>
+                        <?php echo $resultado['descripcion'] ?>
+                        <hr>
+                        <a class="btn btn-warning" href="editar.php?ID=<?php echo $resultado['id'] ?>">Actualizar</a>
+                        <a class="btn btn-danger" href="eliminar.php?ID=<?php echo $resultado['id'] ?>">Eliminar</a>
                     </div>
-                </div>
-                <!--Fin de la primera col-->
-                <div class="col-12">
-                    <label for="basic-url" class="form-label fs-3">Horario</label>
-                    <div class="input-group mb-3">
-                        <input type="time" name="hDesde" class="form-control" placeholder="Username"
-                            aria-label="Username" id="hDesde" />
-                        <span class="input-group-text">-</span>
-                        <input type="time" name="hHasta" class="form-control" placeholder="Server" aria-label="Server"
-                            id="hHasta" />
-                    </div>
-                </div>
-                <!--Segunda columna fin horario-->
-                <div class="col-12 col-md-6 mb-3">
-                    <label for="" class="form-label fs-3">Ubicacion</label>
-                    <input type="text" name="ubicacion" class="form-control" id="ubicacion"
-                        placeholder="via porras, cerca de sanfrancisco" aria-label="Server" />
-                </div>
-                <!--Tercera columna fin de ubicacion-->
-
-                <div class="col-12 col-md-6 mb-3">
-                    <label for="basic-url" class="form-label fs-3">Actividades</label>
-                    <input class="form-control" type="text" id="actividades" name="actividades"
-                        placeholder="ingrese una actividad" list="actividades_list" />
-                    <?php
-                    require_once("class/agenda.php");
-                    $obj_actividad = new agenda();
-                    $actividades = $obj_actividad->select_actividades();
-
-                    $nactividades = count($actividades);
-
-                    //inicio del select de actividades
-                    if ($nactividades > 0) : ?>
-                    <datalist id="actividades_list">
-                        <?php foreach ($actividades as $resultado) : ?>
-                        <option value=<?php print $resultado['actividad'] ?>></option>
-                        <?php endforeach; ?>
-                    </datalist>
-                </div>
-                <?php endif ?>
-                <!--Find del select-->
-
-
-                <div class="col-12 mb-4">
-                    <label for="basic-url" class="form-label fs-3">Descripcion</label>
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="descripcion"
-                        id="descripcion"
-                        placeholder="Voy a ir a jugar futbol con alguno de mis amigos en versalles"></textarea>
-                </div>
-
-
-
-                <div class="d-grid gap-2">
-                    <button class="btn btn-primary" type="submit">Crear</button>
                 </div>
             </div>
-        </form>
-    </div>
+            <?php endforeach; ?>
+            <?php endif ?>
+
+        </div>
+        <div class="d-grid gap-2 mt-5">
+            <a href="formulario.php" class="btn btn-primary">Crear una actividad</a>
+        </div>
+
+        <!-- JavaScript Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
+        </script>
 </body>
 
 </html>
