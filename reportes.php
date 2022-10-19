@@ -8,16 +8,20 @@
     <title>Reportes</title>
 
     <!-- CSS only -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous" />
-    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous" />
+    <!-- <link rel="stylesheet" href="css/styles.css"> -->
 </head>
 
 <body>
     <div class="container bg-light vh-100">
         <h1 class="text-center m-3">Consultar Actividades</h1>
-
-        <div class="menu2">
-
+        <div class="col align-self-end">
+            <a href="index.php">
+                <p class="btn btn-outline-dark">Volver</p>
+            </a>
+        </div>
+        <div class="menu2 mb-2">
             <form action="buscar.php" method="POST">
                 <p>Consulta por Actividad</p>
                 <span>
@@ -30,20 +34,18 @@
 
                     //inicio del select de actividades
                     if ($nactividades > 0) : ?>
-                        <select name="ID" placeholder="Username">
-                            <?php foreach ($actividades as $resultado) : ?>
-                                <option value=<?php print $resultado['id'] ?>><?php print $resultado['actividad'] ?></option>
-                            <?php endforeach; ?>
-                        </select>
-
-                        <button class="btn btn-primary" type="submit">Consultar</button>
-
+                    <select class="form-select" name="ID" placeholder="Username">
+                        <?php foreach ($actividades as $resultado) : ?>
+                        <option value=<?php print $resultado['id'] ?>><?php print $resultado['actividad'] ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                    <button class="btn btn-primary mt-3" type="submit">Consultar</button>
                 </span>
-            <?php endif ?>
+                <?php endif ?>
             </form>
-
-            <!--Find del select-->
-
+        </div>
+        <!--Find del select-->
+        <div>
             <form action="buscarfechas.php" method="POST">
                 <p>Consulta por Fecha</p>
                 <div>
@@ -57,9 +59,6 @@
                 </div>
                 <button class="btn btn-primary" type="submit">Consultar</button>
             </form>
-
-
-
         </div>
 
         <!--acordeon-->
