@@ -68,7 +68,7 @@ CREATE TABLE `dias` (
 
 LOCK TABLES `dias` WRITE;
 /*!40000 ALTER TABLE `dias` DISABLE KEYS */;
-INSERT INTO `dias` VALUES (1,'hola','2020-01-01','10:10:10','10:10:10',1,1,'saludos',NULL),(2,'Casa en la play...','2022-10-06','01:14:00','02:14:00',1,1,'fafadsfdafd','san francisco'),(3,'Solo para ver si agarrar id funciona','2022-10-06','01:14:00','02:14:00',1,1,'fafadsfdafd','san francisco'),(4,'rusos','2022-10-16','02:21:00','02:21:00',2,3,'adad','san francisco'),(5,'Casa en la play...','2022-10-11','01:03:00','01:03:00',1,1,'fvsgsd','san francisco'),(6,'Casa en la playa nuevo2','2022-10-25','01:10:00','02:10:00',1,2,'afaf','san francisco'),(7,'rusos','2022-10-26','05:10:00','08:10:00',1,4,'muerte ','san francisco'),(8,'badbunny el conejo malo','2022-10-16','02:52:00','02:52:00',1,5,'Llegar temprano al concierto porque si no, no me dejan pasar','amador');
+INSERT INTO `dias` VALUES (1,'hola','2020-01-01','10:10:10','10:10:10',1,1,'saludos',NULL),(2,'Casa en la play...','2022-10-06','01:14:00','02:14:00',1,1,'fafadsfdafd','san francisco'),(3,'Solo para ver si agarrar id funciona','2022-10-06','01:14:00','02:14:00',1,1,'fafadsfdafd','san francisco'),(4,'rusos','2022-10-16','02:21:00','02:21:00',2,3,'adad','san francisco'),(5,'Casa en la play...','2022-10-11','01:03:00','01:03:00',1,1,'fvsgsd','san francisco'),(6,'Casa en la playa nuevo2','2022-10-25','01:10:00','02:10:00',1,2,'afaf','san francisco'),(7,'rusos','2022-10-26','05:10:00','08:10:00',1,4,'muerte ','san francisco'),(8,'Concierto de Bab Bunny','2022-10-17','02:52:00','02:52:00',1,5,'Llegar temprano al concierto porque si no, no me dejan pasar','amador');
 /*!40000 ALTER TABLE `dias` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -94,6 +94,26 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `FiltrarPorFecha` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `FiltrarPorFecha`(in Desde date, in Hasta date)
+BEGIN
+SELECT * FROM dias 
+WHERE fecha BETWEEN Desde AND Hasta;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `listar` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -108,6 +128,27 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `listar`()
 BEGIN
 set @v1=(select CURDATE());
 select d.id,d.titulo,d.fecha,d.hora_inicio,d.hora_final,d.estado,d.id_actividad,d.descripcion,d.ubicacion,ac.actividad from dias d inner join actividades ac on d.id_actividad=ac.id where d.fecha=@v1 and  d.estado=1;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `registro por actividad` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `registro_por_actividad`(in actividad_id integer)
+BEGIN
+SELECT * FROM dias 
+ 
+where dias.id_actividad=actividad_id;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -252,4 +293,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-10-16 23:39:18
+-- Dump completed on 2022-10-18 21:06:20

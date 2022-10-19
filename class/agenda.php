@@ -131,4 +131,37 @@ class agenda extends modeloCredencialesBD
         //     $this->_db->close();
         // }
     }
+
+    public function reportar($ID)
+    {
+
+        $instruccion = "CALL registro_por_actividad('" . $ID . "')";
+        //echo $instruccion;
+        $consulta = $this->_db->query($instruccion);
+        $resultado = $consulta->fetch_all(MYSQLI_ASSOC);
+
+        if (!$resultado) {
+            echo "Fallo al consultar las actividades por dia";
+        } else {
+            return $resultado;
+            $resultado->close();
+            $this->_db->close();
+        }
+    }
+    public function reportarFecha($desde, $hasta)
+    {
+
+        $instruccion = "CALL FiltrarPorFecha('" . $desde . "','" . $hasta . "')";
+        //echo $instruccion;
+        $consulta = $this->_db->query($instruccion);
+        $resultado = $consulta->fetch_all(MYSQLI_ASSOC);
+
+        if (!$resultado) {
+            echo "Fallo al consultar las actividades por dia";
+        } else {
+            return $resultado;
+            $resultado->close();
+            $this->_db->close();
+        }
+    }
 }
