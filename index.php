@@ -32,12 +32,15 @@
             $obj_actividad = new agenda();
             $actividades = $obj_actividad->listar();
             $index = 0;
-            $nactividades = count($actividades);
 
-            //inicio del select de actividades
-            if ($nactividades > 0) : ?>
+
+            if ($actividades == null) {
+            } else {
+                $nactividades = count($actividades);
+                //inicio del select de actividades
+                if ($nactividades > 0) : ?>
             <?php foreach ($actividades as $resultado) :
-                    $index++; ?>
+                        $index++; ?>
             <div class="accordion-item">
                 <h2 class="accordion-header" id="flush-headingOne<?php echo $valor = $index ?>">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -65,8 +68,9 @@
             </div>
             <?php endforeach; ?>
             <?php endif ?>
-
         </div>
+        <?php } ?>
+
         <div class="d-grid gap-2 mt-5">
             <a href="formulario.php" class="btn btn-primary">Crear una actividad</a>
         </div>
@@ -75,6 +79,7 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
         </script>
+    </div>
 </body>
 
 </html>
