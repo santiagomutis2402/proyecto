@@ -28,6 +28,7 @@ if ($product->titulo != null) {
         "estado" => $product->estado,
         "descripcion" => $product->descripcion,
         "id_actividad" => $product->id_actividad,
+        "ubicacion" => $product->ubicacion,
         "actividad" => $product->actividad,
     );
     // asignar codigo de respuesta - 200 OK
