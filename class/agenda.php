@@ -46,18 +46,19 @@ class agenda extends modeloCredencialesBD
 
     public function listar()
     {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "http://proyecto.test/api/producto/leer.php");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $resultado = curl_exec($ch);
 
-        $instruccion = "CALL listar()";
-        $consulta = $this->_db->query($instruccion);
-        $resultado = $consulta->fetch_all(MYSQLI_ASSOC);
-
-        if (!$resultado) {
+        $valores = json_decode($resultado, true);
+        /////////////////
+        if (!$valores) {
             echo "Fallo al consultar las actividades";
         } else {
-            return $resultado;
-            $resultado->close();
-            $this->_db->close();
+            return $valores;
         }
+        curl_close($ch);
     }
 
     public function select_actividades()

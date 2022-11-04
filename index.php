@@ -40,33 +40,36 @@
                 //inicio del select de actividades
                 if ($nactividades > 0) : ?>
             <?php foreach ($actividades as $resultado) :
-                        $index++; ?>
+                        foreach ($resultado as $dias) :
+                            $index++ ?>
             <div class="accordion-item">
                 <h2 class="accordion-header" id="flush-headingOne<?php echo $valor = $index ?>">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                         data-bs-target="#flush-collapseOne<?php echo $valor = $index ?>" aria-expanded="false"
                         aria-controls="flush-collapseOne<?php echo $valor = $index ?>">
-                        <?php echo $resultado['titulo'] . ' Fecha:     ' .  $resultado['fecha']   ?>
+                        <?php echo $dias['titulo'] . ' Fecha:     ' .  $dias['fecha']   ?>
                     </button>
                 </h2>
                 <div id="flush-collapseOne<?php echo $valor = $index ?>" class="accordion-collapse collapse"
                     aria-labelledby="flush-headingOne<?php echo $valor = $index ?>"
                     data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body">
-                        <h4><strong>Actividad: </strong><?php echo  $resultado['actividad']  ?></h4>
-                        <h5><strong>Fecha: </strong><?php echo $resultado['fecha'] ?></h5>
+                        <h4><strong>Actividad: </strong><?php echo  $dias['actividad']  ?></h4>
+                        <h5><strong>Fecha: </strong><?php echo $dias['fecha'] ?></h5>
                         <h5><strong>Horario:
-                            </strong><?php echo $resultado['hora_inicio'] . " - " . $resultado['hora_final']  ?></h5>
-                        <h5><strong>Ubicacion: </strong><?php echo $resultado['ubicacion'] ?></h5>
+                            </strong><?php echo $dias['hora_inicio'] . " - " . $dias['hora_final']  ?></h5>
+                        <h5><strong>Ubicacion: </strong><?php echo $dias['ubicacion'] ?></h5>
                         <hr>
-                        <?php echo $resultado['descripcion'] ?>
+                        <?php echo $dias['descripcion'] ?>
                         <hr>
-                        <a class="btn btn-warning" href="editar.php?ID=<?php echo $resultado['id'] ?>">Actualizar</a>
-                        <a class="btn btn-danger" href="eliminar.php?ID=<?php echo $resultado['id'] ?>">Eliminar</a>
+                        <a class="btn btn-warning" href="editar.php?ID=<?php echo $dias['id'] ?>">Actualizar</a>
+                        <a class="btn btn-danger" href="eliminar.php?ID=<?php echo $dias['id'] ?>">Eliminar</a>
                     </div>
                 </div>
             </div>
-            <?php endforeach; ?>
+            <?php
+                        endforeach;
+                    endforeach; ?>
             <?php endif ?>
         </div>
         <?php } ?>
