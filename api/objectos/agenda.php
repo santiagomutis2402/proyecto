@@ -33,6 +33,17 @@ class agenda
         return $stmt;
     }
 
+    function readactivity()
+    {
+        // query para seleccionar todos
+        $query = "CALL select_actividades()";
+        // sentencia para preparar query
+        $stmt = $this->conn->prepare($query);
+        // ejecutar query
+        $stmt->execute();
+        return $stmt;
+    }
+
 
 
     // utilizado al completar el formulario de actualización del producto

@@ -87,9 +87,11 @@ $actividad = $actividades['actividad'];
                     //inicio del select de actividades
                     if ($nactividades > 0) : ?>
                     <datalist id="actividades_list">
-                        <?php foreach ($actividades as $resultado) : ?>
-                        <option value=<?php print $resultado['actividad'] ?>></option>
-                        <?php endforeach; ?>
+                        <?php foreach ($actividades as $resultado) :
+                                foreach ($resultado as $tareas) : ?>
+                        <option value=<?php print $tareas['actividad'] ?>></option>
+                        <?php endforeach;
+                            endforeach; ?>
                     </datalist>
                 </div>
                 <?php endif ?>
