@@ -50,7 +50,7 @@ if (
         // asignar codigo de respuesta - 503 servicio no disponible
         http_response_code(503);
         // informar al usuario
-        var_dump($producto);
+
         echo json_encode(array("message" => "No se pudo crear la activiad."));
     }
 }
