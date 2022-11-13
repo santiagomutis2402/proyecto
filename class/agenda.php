@@ -20,34 +20,37 @@ class agenda extends modeloCredencialesBD
     public function insert(
         $titulo,
         $fecha,
-        $hDesde,
-        $hHasta,
+        $hora_inicio,
+        $hora_final,
         $estado,
         $descripcion,
         $actividades,
         $ubicacion
     ) {
-        $instruccion = "call agenda.ValidarExistencia('" . $titulo . "','" . $fecha .
-            "','" . $hDesde . "','" . $hHasta . "','" . $estado . "','" .
-            $descripcion . "','" . $actividades . "','" . $ubicacion . "')";
+        $parametros = array("titulo" => $titulo,
+                        "fecha" => $fecha,
+                        "hora_inicio" => $hora_inicio,
+                        "hora_final" => $hora_final,
+                        "estado" => $estado,
+                        "descripcion" => $descripcion,
+                        "actividades" => $actividades,
+                        "ubicacion" => $ubicacion
+                    );
+        $ch = curl_init();
+        curl_setopt_array($ch, array(
+            CURLOPT_URL => "http://localhost/proyecto-master/api/producto/crear.php",
+            CURLOPT_POST => 1,
+            CURLOPT_POSTFIELDS => http_build_query($parametros)
+        ));
+        curl_exec($ch);
 
-        $consulta = $this->_db->query($instruccion);
-        // $resultado = $consulta->fetch_all();
-
-        // if (!$resultado) {
-        //     echo "Fallo al insertar las actividades";
-        // } else {
-        //     return $resultado;
-        //     $this->_db->close();
-        // }
-
-        return $instruccion;
+        curl_close($ch);
     }
 
     public function listar()
     {
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "http://proyecto.test/api/producto/leer.php");
+        curl_setopt($ch, CURLOPT_URL, "http://localhost/proyecto-master/api/producto/leer.php");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $resultado = curl_exec($ch);
 
@@ -64,7 +67,7 @@ class agenda extends modeloCredencialesBD
     public function select_actividades()
     {
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "http://proyecto.test/api/producto/listar_actividades.php");
+        curl_setopt($ch, CURLOPT_URL, "http://localhost/proyecto-master/api/producto/listar_actividades.php");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $resultado = curl_exec($ch);
 
@@ -81,7 +84,7 @@ class agenda extends modeloCredencialesBD
     public function select_byid($ID)
     {
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "http://proyecto.test/api/producto/leer_uno.php?id=$ID");
+        curl_setopt($ch, CURLOPT_URL, "http://localhost/proyecto-master/api/producto/leer_uno.php?id=$ID");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $resultado = curl_exec($ch);
 
@@ -115,26 +118,34 @@ class agenda extends modeloCredencialesBD
 
         $titulo,
         $fecha,
-        $hDesde,
-        $hHasta,
+        $hora_inicio,
+        $hora_final,
         $estado,
         $descripcion,
         $actividades,
         $ubicacion,
         $ID
     ) {
-        $instruccion = "call UpdateAgenda('" . $titulo . "','" . $fecha .
-            "','" . $hDesde . "','" . $hHasta . "','" . $estado . "','" .
-            $descripcion . "','" . $actividades . "','" . $ubicacion . "','" . $ID . "')";
-        $consulta = $this->_db->query($instruccion);
-        // $resultado = $consulta->fetch_assoc();
-        // if (!$resultado) {
-        //     echo "Fallo al actualizar las actividades";
-        // } else {
-        //     return $resultado;
 
-        //     $this->_db->close();
-        // }
+        $parametros = array("titulo" => $titulo,
+                        "fecha" => $fecha,
+                        "hora_inicio" => $hora_inicio,
+                        "hora_final" => $hora_final,
+                        "estado" => $estado,
+                        "descripcion" => $descripcion,
+                        "actividades" => $actividades,
+                        "ubicacion" => $ubicacion,
+                        "ID" => $ID
+                    );
+        $ch = curl_init();
+        curl_setopt_array($ch, array(
+            CURLOPT_URL => "http://localhost/proyecto-master/api/producto/editar.php",
+            CURLOPT_POST => 1,
+            CURLOPT_POSTFIELDS => http_build_query($parametros)
+        ));
+        curl_exec($ch);
+        
+        curl_close($ch);
     }
 
     public function reportar($ID)

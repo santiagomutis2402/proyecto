@@ -33,9 +33,12 @@
             $actividades = $obj_actividad->listar();
             $index = 0;
 
+            if ($actividades == null) 
+            {
 
-            if ($actividades == null) {
-            } else {
+            } 
+            else 
+            {
                 $nactividades = count($actividades);
                 //inicio del select de actividades
                 if ($nactividades > 0) : ?>
