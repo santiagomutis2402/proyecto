@@ -45,21 +45,11 @@ class agenda
     }
 
 
-    public function crear(
-        $titulo,
-        $fecha,
-        $hora_inicio,
-        $hora_final,
-        $estado,
-        $descripcion,
-        $actividad,
-        $ubicacion
-    ) {
+    public function crear()
+    {
 
         // query para insertar un registro
-        $query = "ValidarExistencia('" . $titulo . "','" . $fecha .
-            "','" . $hora_inicio . "','" . $hora_final . "','" . $estado . "','" .
-            $descripcion . "','" . $actividad . "','" . $ubicacion . "')";
+        $query = "ValidarExistencia(:titulo,:fecha,:hora_inicio,:hora_final,:estado,:descripcion,:actividad,:ubicacion)";
         // preparar query
         $stmt = $this->conn->prepare($query);
         // sanitize
@@ -80,6 +70,7 @@ class agenda
         $stmt->bindParam(":descripcion", $this->descripcion);
         $stmt->bindParam(":actividad", $this->actividad);
         $stmt->bindParam(":ubicacion", $this->ubicacion);
+
         // execute query
         if ($stmt->execute()) {
             return true;
