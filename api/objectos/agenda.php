@@ -44,10 +44,43 @@ class agenda
         return $stmt;
     }
 
+    public function editar()
+    { // query para insertar un registro
+        $query = "call agenda.UpdateAgenda(:titulo,:fecha,:hora_inicio,:hora_final,:estado,:descripcion,:actividad,:ubicacion,:id)";
+        // preparar query
+        $stmt = $this->conn->prepare($query);
+        // sanitize
+        $this->titulo = htmlspecialchars(strip_tags($this->titulo));
+        $this->fecha = htmlspecialchars(strip_tags($this->fecha));
+        $this->hora_inicio = htmlspecialchars(strip_tags($this->hora_inicio));
+        $this->hora_final = htmlspecialchars(strip_tags($this->hora_final));
+        $this->estado = htmlspecialchars(strip_tags($this->estado));
+        $this->descripcion = htmlspecialchars(strip_tags($this->descripcion));
+        $this->actividad = htmlspecialchars(strip_tags($this->actividad));
+        $this->ubicacion = htmlspecialchars(strip_tags($this->ubicacion));
+        $this->id = htmlspecialchars(strip_tags($this->id));
+
+        // bind values
+        $stmt->bindParam(":titulo", $this->titulo);
+        $stmt->bindParam(":fecha", $this->fecha);
+        $stmt->bindParam(":hora_inicio", $this->hora_inicio);
+        $stmt->bindParam(":hora_final", $this->hora_final);
+        $stmt->bindParam(":estado", $this->estado);
+        $stmt->bindParam(":descripcion", $this->descripcion);
+        $stmt->bindParam(":actividad", $this->actividad);
+        $stmt->bindParam(":ubicacion", $this->ubicacion);
+        $stmt->bindParam(":id", $this->id);
+
+        // execute query
+        if ($stmt->execute()) {
+            return true;
+        }
+        return false;
+    }
+
 
     public function crear()
     {
-
         // query para insertar un registro
         $query = "call ValidarExistencia(:titulo,:fecha,:hora_inicio,:hora_final,:estado,:descripcion,:actividad,:ubicacion)";
         // preparar query
@@ -82,13 +115,11 @@ class agenda
     function readOne()
     {
         // consulta para leer un solo registro
-        $query = "SELECT d.id id, d.titulo, d.fecha, d.hora_inicio, d.hora_final, d.estado, d.descripcion, d.ubicacion, d.id_actividad, a.actividad 
-          FROM dias d inner join actividades a on d.id_actividad=a.id 
-          where d.id=?";
+        $query = "call agenda.select_byid(:id)";
         // preparar declaración de consulta
         $stmt = $this->conn->prepare($query);
         // ID de enlace del producto a actualizar
-        $stmt->bindParam(1, $this->id);
+        $stmt->bindParam("id", $this->id);
         // ejecutar consulta
         $stmt->execute();
         // obtener fila recuperada
