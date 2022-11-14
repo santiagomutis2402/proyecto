@@ -27,23 +27,36 @@ class agenda extends modeloCredencialesBD
         $actividades,
         $ubicacion
     ) {
-        $parametros = array("titulo" => $titulo,
-                        "fecha" => $fecha,
-                        "hora_inicio" => $hora_inicio,
-                        "hora_final" => $hora_final,
-                        "estado" => $estado,
-                        "descripcion" => $descripcion,
-                        "actividades" => $actividades,
-                        "ubicacion" => $ubicacion
-                    );
-        $ch = curl_init();
-        curl_setopt_array($ch, array(
-            CURLOPT_URL => "http://localhost/proyecto-master/api/producto/crear.php",
-            CURLOPT_POST => 1,
-            CURLOPT_POSTFIELDS => http_build_query($parametros)
-        ));
-        curl_exec($ch);
+        $url = "http://localhost/proyecto-master/api/producto/crear.php";
+        $ch = curl_init($url);
 
+        $data = array(
+            "titulo" => "${titulo}",
+            "fecha" => "${fecha}",
+            "hora_inicio" => "${hora_inicio}",
+            "hora_final" => "${hora_final}",
+            "estado" => $estado,
+            "descripcion" => "${descripcion}",
+            "actividades" => $actividades,
+            "ubicacion" => "${ubicacion}"
+
+        );
+
+        $payload = json_encode(array("user" => $data));
+
+        //attach encoded JSON string to the POST fields
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+
+        //set the content type to application/json
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
+
+        //return response instead of outputting
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        //execute the POST request
+        $result = curl_exec($ch);
+
+        //close cURL resource
         curl_close($ch);
     }
 
@@ -126,25 +139,36 @@ class agenda extends modeloCredencialesBD
         $ubicacion,
         $ID
     ) {
+        $url = "http://localhost/proyecto-master/api/producto/editar.php";
+        $ch = curl_init($url);
 
-        $parametros = array("titulo" => $titulo,
-                        "fecha" => $fecha,
-                        "hora_inicio" => $hora_inicio,
-                        "hora_final" => $hora_final,
-                        "estado" => $estado,
-                        "descripcion" => $descripcion,
-                        "actividades" => $actividades,
-                        "ubicacion" => $ubicacion,
-                        "ID" => $ID
-                    );
-        $ch = curl_init();
-        curl_setopt_array($ch, array(
-            CURLOPT_URL => "http://localhost/proyecto-master/api/producto/editar.php",
-            CURLOPT_POST => 1,
-            CURLOPT_POSTFIELDS => http_build_query($parametros)
-        ));
-        curl_exec($ch);
-        
+        $data = array(
+            "titulo" => "${titulo}",
+            "fecha" => "${fecha}",
+            "hora_inicio" => "${hora_inicio}",
+            "hora_final" => "${hora_final}",
+            "estado" => $estado,
+            "descripcion" => "${descripcion}",
+            "actividades" => $actividades,
+            "ubicacion" => "${ubicacion}",
+            "ID" => $ID
+        );
+
+        $payload = json_encode(array("user" => $data));
+
+        //attach encoded JSON string to the POST fields
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+
+        //set the content type to application/json
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
+
+        //return response instead of outputting
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        //execute the POST request
+        $result = curl_exec($ch);
+
+        //close cURL resource
         curl_close($ch);
     }
 
