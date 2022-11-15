@@ -8,8 +8,7 @@
     <title>Reportes</title>
 
     <!-- CSS only -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous" />
     <!-- <link rel="stylesheet" href="css/styles.css"> -->
 </head>
 
@@ -34,14 +33,18 @@
 
                     //inicio del select de actividades
                     if ($nactividades > 0) : ?>
-                    <select class="form-select" name="ID" placeholder="Username">
-                        <?php foreach ($actividades as $resultado) : ?>
-                        <option value=<?php print $resultado['id'] ?>><?php print $resultado['actividad'] ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                    <button class="btn btn-primary mt-3" type="submit">Consultar</button>
+                        <select class="form-select" name="ID" placeholder="Username">
+                            <?php foreach ($actividades as $resultado) :
+                                foreach ($resultado as $tareas) : ?>
+
+                                    <option value=<?php print $tareas['id'] ?>><?php print $tareas['actividad'] ?></option>
+                            <?php endforeach;
+                            endforeach; ?>
+                        </select>
+                        <button class="btn btn-primary mt-3" type="submit">Consultar</button>
                 </span>
-                <?php endif ?>
+            <?php endif ?>
+
             </form>
         </div>
         <!--Find del select-->
