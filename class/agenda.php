@@ -114,17 +114,29 @@ class agenda extends modeloCredencialesBD
 
     public function eliminar($ID)
     {
-        $instruccion = "call agenda.eliminar($ID);";
-        $consulta = $this->_db->query($instruccion);
-        // $resultado = $consulta->fetch_all();
+        $url = "http://localhost/proyecto-master/api/producto/eliminar.php";
+        $ch = curl_init($url);
 
-        // if (!$resultado) {
-        //     echo "Fallo al eliminar";
-        // } else {
-        //     return $resultado;
+        $data = array(
+            "ID" => $ID
+        );
 
-        //     $this->_db->close();
-        // }
+        $payload = json_encode(array("user" => $data));
+
+        //attach encoded JSON string to the POST fields
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+
+        //set the content type to application/json
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
+
+        //return response instead of outputting
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        //execute the POST request
+        $result = curl_exec($ch);
+
+        //close cURL resource
+        curl_close($ch);
     }
 
     public function update(

@@ -79,6 +79,26 @@ class agenda
     }
 
 
+    public function eliminar()
+    { // query para insertar un registro
+        $query = " call agenda.eliminar(:id);";
+        // preparar query
+        $stmt = $this->conn->prepare($query);
+        // sanitize
+
+        $this->id = htmlspecialchars(strip_tags($this->id));
+
+        // bind values
+        $stmt->bindParam(":id", $this->id);
+
+        // execute query
+        if ($stmt->execute()) {
+            return true;
+        }
+        return false;
+    }
+
+
     public function crear()
     {
         // query para insertar un registro
