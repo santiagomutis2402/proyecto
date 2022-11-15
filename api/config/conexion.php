@@ -2,7 +2,7 @@
 class Conexion
 {
     // especificar las credenciales de base de datos
-    private $host = "localhost:3306";
+    private $host = "localhost:3307";
     private $db_name = "agenda";
     private $username = "root";
     private $password = "";

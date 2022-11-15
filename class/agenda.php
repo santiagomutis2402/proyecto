@@ -41,7 +41,7 @@ class agenda extends modeloCredencialesBD
 
         $fields_string = json_encode($fields);
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "http://localhost/proyecto/api/producto/crear.php");
+        curl_setopt($ch, CURLOPT_URL, "http://localhost/proyecto-master/api/producto/crear.php");
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
         $data = curl_exec($ch);
@@ -52,7 +52,7 @@ class agenda extends modeloCredencialesBD
     public function listar()
     {
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "http://localhost/proyecto/api/producto/leer.php");
+        curl_setopt($ch, CURLOPT_URL, "http://localhost/proyecto-master/api/producto/leer.php");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $resultado = curl_exec($ch);
 
@@ -69,7 +69,7 @@ class agenda extends modeloCredencialesBD
     public function select_actividades()
     {
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "http://localhost/proyecto/api/producto/listar_actividades.php");
+        curl_setopt($ch, CURLOPT_URL, "http://localhost/proyecto-master/api/producto/listar_actividades.php");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $resultado = curl_exec($ch);
 
@@ -86,7 +86,7 @@ class agenda extends modeloCredencialesBD
     public function select_byid($ID)
     {
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "http://localhost/proyecto/producto/leer_uno.php?id=$ID");
+        curl_setopt($ch, CURLOPT_URL, "http://localhost/proyecto-master/api/producto/leer_uno.php?id=$ID");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $resultado = curl_exec($ch);
 
@@ -109,7 +109,7 @@ class agenda extends modeloCredencialesBD
 
         $fields_string = json_encode($fields);
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "http://localhost/proyecto/api/producto/eliminar.php");
+        curl_setopt($ch, CURLOPT_URL, "http://localhost/proyecto-master/api/producto/eliminar.php");
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
         $data = curl_exec($ch);
@@ -144,7 +144,7 @@ class agenda extends modeloCredencialesBD
 
         $fields_string = json_encode($fields);
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "http://localhost/proyecto/api/producto/editar.php");
+        curl_setopt($ch, CURLOPT_URL, "http://localhost/proyecto-master/api/producto/editar.php");
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
         $data = curl_exec($ch);
