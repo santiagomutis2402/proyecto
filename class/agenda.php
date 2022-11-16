@@ -155,19 +155,33 @@ class agenda extends modeloCredencialesBD
     public function reportar($ID)
     {
 
-        $instruccion = "CALL registro_por_actividad('" . $ID . "')";
-        //echo $instruccion;
-        $consulta = $this->_db->query($instruccion);
-        $resultado = $consulta->fetch_all(MYSQLI_ASSOC);
+        $fields = array(
+            "id" => "${ID}"
+        );
+        $fields_string = json_encode($fields);
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "http://localhost/proyecto/api/producto/buscar.php?id=$ID");
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
+        $data = curl_exec($ch);
 
-        if (!$resultado) {
-            echo "Fallo al consultar las actividades por dia";
-        } else {
-            return $resultado;
-            $resultado->close();
-            $this->_db->close();
-        }
+        curl_close($ch);
+        return $data;
     }
+
+    //$instruccion = "CALL registro_por_actividad('" . $ID . "')";
+    //echo $instruccion;
+    //$consulta = $this->_db->query($instruccion);
+    //$resultado = $consulta->fetch_all(MYSQLI_ASSOC);
+
+    //if (!$resultado) {
+    //  echo "Fallo al consultar las actividades por dia";
+    //} else {
+    //  return $resultado;
+    //$resultado->close();
+    //$this->_db->close();
+    //}
+
     public function reportarFecha($desde, $hasta)
     {
 

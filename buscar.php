@@ -32,37 +32,15 @@
             $ID = $_POST['ID'];
             require_once("class/agenda.php");
             $obj_actividad = new agenda();
+            //echo $obj_actividades;
             $actividades = $obj_actividad->reportar($ID);
-            $index = 0;
-            $nactividades = count($actividades);
+            //var_dump($actividades);
+            //$index = 0;
+
             //echo "<pre>";
             //print_r($actividades);
             //echo "</pre>";
-            if ($nactividades > 0) : ?>
-                <?php foreach ($actividades as $resultado) :
-                    $index++; ?>
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="flush-headingOne<?php echo $valor = $index ?>">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne<?php echo $valor = $index ?>" aria-expanded="false" aria-controls="flush-collapseOne<?php echo $valor = $index ?>">
-                                <?php echo $resultado['titulo'] . ' Fecha:     ' .  $resultado['fecha']   ?>
-                            </button>
-                        </h2>
-                        <div id="flush-collapseOne<?php echo $valor = $index ?>" class="accordion-collapse collapse" aria-labelledby="flush-headingOne<?php echo $valor = $index ?>" data-bs-parent="#accordionFlushExample">
-                            <div class="accordion-body">
-                                <h5><strong>Fecha: </strong><?php echo $resultado['fecha'] ?></h5>
-                                <h5><strong>Horario:
-                                    </strong><?php echo $resultado['hora_inicio'] . " - " . $resultado['hora_final']  ?></h5>
-                                <h5><strong>Ubicacion: </strong><?php echo $resultado['ubicacion'] ?></h5>
-                                <hr>
-                                <?php echo $resultado['descripcion'] ?>
-                                <hr>
-                                <a class="btn btn-warning" href="editar.php?ID=<?php echo $resultado['id'] ?>">Actualizar</a>
-                                <a class="btn btn-danger" href="eliminar.php?ID=<?php echo $resultado['id'] ?>">Eliminar</a>
-                            </div>
-                        </div>
-                    </div>
-                <?php endforeach; ?>
-            <?php endif ?>
+            ?>
         </div>
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">

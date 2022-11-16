@@ -163,4 +163,66 @@ class agenda
         echo "<\pre>";
         exit;
     }
+
+    function report_activity($id)
+    {
+        $query = "CALL registro_por_actividad('" . $id . "')";
+        //echo $query;
+        $stmt = $this->conn->prepare($query);
+        // ejecutar consulta
+        $stmt->execute();
+        $index = 0;
+        $test = array();
+        foreach ($stmt as $row) {
+            array_push($test, $row);
+        }
+        //var_dump($test);
+
+        foreach ($test as $row) {
+            if ($row['estado'] != '2') {
+                echo '<div class="accordion-item">';
+                echo  '<h2 class="accordion-header" id="flush-headingOne' . $valor = $index . '">';
+                echo '<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne' . $valor = $index . '" aria-expanded="false" aria-controls="flush-collapseOne' . $valor = $index . '">' . $row['titulo'] . ' Fecha:     ' .  $row['fecha'] . '</button>';
+                echo ' </h2>';
+                echo '<div id="flush-collapseOne' . $valor = $index . '" class="accordion-collapse collapse" aria-labelledby="flush-headingOne' . $valor = $index . '" data-bs-parent="#accordionFlushExample">';
+                echo ' <div class="accordion-body">';
+                echo  '<h5><strong>Fecha: </strong>' . $row['fecha'] . '</h5>';
+                echo '<h5><strong>Horario:';
+                echo  '</strong>' . $row['hora_inicio'] . ' - ' . $row['hora_final'] . '</h5>';
+                echo '<h5><strong>Ubicacion: </strong>' . $row['ubicacion'] . '</h5>';
+                echo '<hr>';
+                echo 'Descripcion: ' . $row['descripcion'];
+                echo '<hr>';
+                echo '<a class="btn btn-warning" href="editar.php?ID=' . $row['id'] . '">Actualizar</a>';
+                echo  '<a class="btn btn-danger" href="eliminar.php?ID=' . $row['id'] . '">Eliminar</a>';
+                echo '  </div>';
+                echo '</div>';
+                echo '</div>';
+                $index += 1;
+            }
+        }
+        return $test;
+        // $test = array();
+        // ID de enlace del producto a actualizar
+        // for ($i = 1; $i <= 10; $i++) {
+        //$stmt->bindParam("id", $this->id);
+        //$stmt->bindParam("titulo", $this->titulo);
+        //$stmt->bindParam("fecha", $this->fecha);
+        //$stmt->bindParam("hora_inicio", $this->hora_inicio);
+        //$stmt->bindParam("hora_final", $this->hora_final);
+        //$stmt->bindParam("estado", $this->estado);
+        //$stmt->bindParam("descripcion", $this->descripcion);
+        //$stmt->bindParam("ubicacion", $this->ubicacion);
+        //$stmt->bindParam("id_actividad", $this->id_actividad);
+        //$stmt->bindParam("actividad", $this->actividad);
+        // obtener fila recuperada
+        //$row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        //foreach ($row as $fila) {
+        //  var_dump($fila);
+        //}
+        //}
+        // establecer valores a las propiedades del objeto
+
+    }
 }
